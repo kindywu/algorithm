@@ -1,17 +1,33 @@
+use anyhow::{anyhow, Result};
+use num::Bounded;
+use std::ops::Sub;
+
 // 寻找最大收益
-fn main() {
+fn main() -> Result<()> {
     // 股票价格波动表
-    let stock = [23, 42, 65, 120, 55, 10, 190, 44];
+    let mut stock_array = [10, 42, 9, 120, 55, 8, 190, 44];
+    let max_revenue = cal_max_revenue::<i32>(&mut stock_array)?;
+    println!("max revenue: {max_revenue}");
+    Ok(())
+}
 
-    let mut min_price = stock[0];
-    let mut max_revenue = i32::MIN;
+fn cal_max_revenue<T>(stock_array: &mut [T]) -> Result<T>
+where
+    T: Ord + Copy + Bounded + Sub<Output = T>,
+{
+    if stock_array.is_empty() {
+        return Err(anyhow!("stock can't be empty"));
+    }
 
-    for price in stock {
-        if price <= min_price {
-            min_price = price;
-        } else if max_revenue < price - min_price {
-            max_revenue = price - min_price
+    let mut min_price = stock_array[0];
+    let mut max_revenue = T::min_value();
+
+    for price in stock_array {
+        if price <= &mut min_price {
+            min_price = *price;
+        } else if max_revenue < *price - min_price {
+            max_revenue = *price - min_price
         }
     }
-    println!("max revenue: {max_revenue}");
+    Ok(max_revenue)
 }

@@ -13,7 +13,7 @@ fn main() -> Result<()> {
     Ok(())
 }
 
-#[allow(clippy::needless_range_loop)]
+// #[allow(clippy::needless_range_loop)]
 fn generate_spiral_array(len: usize, rows: usize, cols: usize) -> Result<Vec<Vec<usize>>> {
     if len != rows * cols {
         return Err(anyhow!("len {len} must equal rows {rows} * cols {cols}"));
@@ -28,6 +28,7 @@ fn generate_spiral_array(len: usize, rows: usize, cols: usize) -> Result<Vec<Vec
         }
         top += 1;
 
+        #[allow(clippy::needless_range_loop)]
         for i in top..=bottom {
             arr[i][right] = num;
             num += 1;
@@ -65,4 +66,10 @@ fn print_spiral_array(spiral_array: Vec<Vec<usize>>) {
         }
         println!()
     }
+}
+
+#[allow(unused)]
+fn generate_spiral_array2(rows: usize, cols: usize) -> Result<Vec<Vec<usize>>> {
+    let len = rows * cols;
+    generate_spiral_array(len, rows, cols)
 }
