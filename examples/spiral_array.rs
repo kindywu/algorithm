@@ -36,7 +36,6 @@ fn generate_spiral_array(len: usize, rows: usize, cols: usize) -> Result<Vec<Vec
         right -= 1;
 
         if top <= bottom {
-            println!("{left} {right}");
             for i in (left..=right).rev() {
                 arr[bottom][i] = num;
                 num += 1;
