@@ -6,6 +6,7 @@ use std::ops::Sub;
 fn main() -> Result<()> {
     // 股票价格波动表
     let mut stock_array = [10, 42, 9, 120, 55, 8, 190, 44];
+    // let mut stock_array = [10];
     let max_revenue = cal_max_revenue::<i32>(&mut stock_array)?;
     println!("max revenue: {max_revenue}");
     Ok(())
@@ -15,8 +16,8 @@ fn cal_max_revenue<T>(stock_array: &mut [T]) -> Result<T>
 where
     T: Ord + Copy + Bounded + Sub<Output = T>,
 {
-    if stock_array.is_empty() {
-        return Err(anyhow!("stock can't be empty"));
+    if stock_array.len() <= 1 {
+        return Err(anyhow!("stock array len must bigger than 1"));
     }
 
     let mut min_price = stock_array[0];
